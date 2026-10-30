@@ -746,12 +746,12 @@
             </div>
             <div class="window-body">
                 <p><b>link.exe contact</b></p>
-                <p>linkdotexe@protonmail.com</p>
+                <p>linkdotexe [at] protonmail.com</p>
 
                 <p><b>individual emails</b></p>
                 <p>
-                    jasonandrewclark1@gmail.com<br>
-                    rheece@tippexe.com
+                    jasonandrewclark1 [at] gmail.com<br>
+                    rheece [at] tippexe.com
                 </p>
             </div>
         </div>
@@ -1298,7 +1298,17 @@
             bubbles.splice(index, 1);
             bubble.el.classList.add('popping');
             setTimeout(function () { bubble.el.remove(); }, 160);
+
+            // pop enough of them and you're sent to the track
+            poppedBubbles += 1;
+            if (poppedBubbles === BUBBLES_TO_WIN) {
+                setTimeout(function () { window.location.href = BUBBLE_PRIZE_URL; }, 400);
+            }
         }
+
+        let poppedBubbles = 0;
+        const BUBBLES_TO_WIN = 10;
+        const BUBBLE_PRIZE_URL = 'https://soundcloud.com/freelin_k/1-lost-in-voice-20261016-1/s-pAQmWWuu9d0?si=256fd1010f5b4fc19eeaa1c7400a8d25&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing';
 
         let bubbleFrame = null;
         let lastBubbleTime = 0;
