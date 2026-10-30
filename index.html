@@ -36,9 +36,13 @@
         }
 
         .icon .icon-glyph {
-            font-size: 37px;
+            font-size: 39px;
             line-height: 1;
-            filter: drop-shadow(1px 2px 2px rgba(0, 0, 0, 0.45));
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.45);
         }
 
         .icon .icon-label {
@@ -173,6 +177,22 @@
             word-break: break-word;
         }
 
+        #win-who .tree-view a {
+            color: #0000ee;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        #win-who .tree-view a:hover {
+            color: #ff0000;
+        }
+
+        #win-who .tree-view a::after {
+            content: " \2197";
+            text-decoration: none;
+            display: inline-block;
+        }
+
         .photo-window-body img {
             max-width: 100%;
             display: block;
@@ -181,18 +201,19 @@
 
         /* terminal icon, drawn rather than an emoji */
         .terminal-glyph {
-            width: 37px;
-            height: 30px;
+            width: 44px;
+            height: 36px;
+            margin: 6px 0;
             background: #000;
             border: 2px solid #d4d0c8;
             border-radius: 3px;
             box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.5);
             color: #00ff00;
             font-family: "Courier New", monospace;
-            font-size: 13px;
+            font-size: 15px;
             font-weight: bold;
             line-height: 1;
-            padding: 3px 0 0 3px;
+            padding: 4px 0 0 4px;
             box-sizing: border-box;
         }
 
@@ -345,6 +366,7 @@
 
         /* companion */
         #companion {
+            will-change: transform;
             position: absolute;
             right: 30px;
             bottom: 50px;
@@ -400,6 +422,79 @@
             from { transform: scale(0); }
             to { transform: scale(1); }
         }
+
+        /* mobile: icons flow in a grid, windows fill the screen instead of floating */
+        @media (max-width: 768px) {
+            body {
+                touch-action: manipulation;
+            }
+
+            #desktop {
+                height: 100dvh;
+                display: flex;
+                flex-wrap: wrap;
+                align-content: flex-start;
+                justify-content: space-around;
+                gap: 12px 4px;
+                padding: 16px 8px 46px;
+                box-sizing: border-box;
+                overflow-y: auto;
+            }
+
+            .icon {
+                position: static !important;
+                width: 30%;
+                max-width: 110px;
+            }
+
+            .window {
+                top: 8px !important;
+                left: 8px !important;
+                right: 8px;
+                width: auto !important;
+                max-height: calc(100dvh - 46px);
+                flex-direction: column;
+            }
+
+            .window[style*="display: block"] {
+                display: flex !important;
+            }
+
+            .window-body {
+                max-height: none;
+                flex: 1 1 auto;
+                overflow: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .window-content {
+                zoom: 1 !important;
+            }
+
+            .resize-grip {
+                display: none;
+            }
+
+            .title-bar-controls button {
+                min-width: 30px;
+                min-height: 28px;
+            }
+
+            #win-shows .window-body {
+                white-space: normal !important;
+            }
+
+            .photo-window-body img {
+                width: 100% !important;
+                height: auto !important;
+            }
+
+            #companion {
+                width: 90px;
+                right: 8px;
+                bottom: 40px;
+            }
+        }
     </style>
     <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css">
     <style>
@@ -415,24 +510,24 @@
     <div id="desktop">
 
         <!-- desktop icons -->
-        <div class="icon" style="top: 20px; left: 20px;" ondblclick="openWindow('win-description')">
-            <div class="icon-glyph">📄</div>
-            <div class="icon-label">description</div>
-        </div>
-
-        <div class="icon" style="top: 120px; left: 20px;" ondblclick="openWindow('win-who')">
+        <div class="icon" style="top: 20px; left: 20px;" ondblclick="openWindow('win-who')">
             <div class="icon-glyph">👤</div>
             <div class="icon-label">who</div>
         </div>
 
-        <div class="icon" style="top: 220px; left: 20px;" ondblclick="openWindow('win-press')">
+        <div class="icon" style="top: 120px; left: 20px;" ondblclick="openWindow('win-press')">
             <div class="icon-glyph">🖼️</div>
             <div class="icon-label">press_photos</div>
         </div>
 
-        <div class="icon" style="top: 320px; left: 20px;" ondblclick="openWindow('win-contact')">
+        <div class="icon" style="top: 220px; left: 20px;" ondblclick="openWindow('win-contact')">
             <div class="icon-glyph">✉️</div>
             <div class="icon-label">contact</div>
+        </div>
+
+        <div class="icon" style="top: 320px; left: 20px;" ondblclick="openWindow('win-shows')">
+            <div class="icon-glyph">🎤</div>
+            <div class="icon-label">shows.exe</div>
         </div>
 
         <div class="icon" style="top: 420px; left: 20px;" ondblclick="openWindow('win-perf-radio')">
@@ -440,12 +535,12 @@
             <div class="icon-label">Performances &amp; Radio</div>
         </div>
 
-        <div class="icon" style="top: 540px; left: 20px;" ondblclick="openLogin()">
+        <div class="icon" style="top: 20px; right: 20px;" ondblclick="openLogin()">
             <div class="terminal-glyph">&gt;_</div>
             <div class="icon-label">terminal.exe</div>
         </div>
 
-        <div class="icon" style="top: 20px; left: 120px;" ondblclick="openWindow('win-workshop')">
+        <div class="icon" style="top: 535px; left: 20px;" ondblclick="openWindow('win-workshop')">
             <div class="icon-glyph">🛠️</div>
             <div class="icon-label">workshop.exe</div>
         </div>
@@ -503,15 +598,15 @@
         </div>
 
         <!-- windows -->
-        <div class="window" id="win-description"style="top: 60px; left: 140px; width: 420px;">
+        <div class="window" id="win-who" style="top: 60px; left: 140px; width: 420px;">
             <div class="title-bar">
-                <div class="title-bar-text">description.exe</div>
+                <div class="title-bar-text">who.exe</div>
                 <div class="title-bar-controls">
-                    <button aria-label="Close" onclick="closeWindow('win-description')"></button>
+                    <button aria-label="Close" onclick="closeWindow('win-who')"></button>
                 </div>
             </div>
             <div class="window-body">
-                <p>link.exe [free<b>link</b> + tipp<b>.exe</b>]</p> 
+                <p>link.exe [free<b>link</b> + tipp<b>.exe</b>]</p>
                 <p>
                     link.exe is Jason Andrew Clark (NL) and Rheece van der Linde (ZA), a duo formed at 89 Sound Art School in Struer, Denmark, 
                     after landing on the same obsession with building instruments out of microcontrollers. We perform fully improvised, treating routing 
@@ -522,17 +617,6 @@
                     show inside a Bang & Olufsen speaker testing facility, with radio performances in Amsterdam coming up. We 
                     return to Struer this October to teach Teensy Practices, the workshop that started this for both of us.
                 </p>
-            </div>
-        </div>
-
-        <div class="window" id="win-who" style="top: 100px; left: 220px; width: 380px;">
-            <div class="title-bar">
-                <div class="title-bar-text">who.exe</div>
-                <div class="title-bar-controls">
-                    <button aria-label="Close" onclick="closeWindow('win-who')"></button>
-                </div>
-            </div>
-            <div class="window-body">
                 <ul class="tree-view">
                     <li>[Jason Clark / freelink] — <a href="https://www.jasonandrewclark.com/" target="_blank">website</a> / <a href="https://www.instagram.com/freelink0000/" target="_blank">instagram</a> </li>
                     <li>[Rheece Van Der Linden / Tipp.exe] — <a href="https://www.tippexe.com/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAcGRvZgJleHRuA2FlbQIxMQBzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAadeBUx9EbPl3kVwlwznjL8ycupkJ7uq6Rrd07yEM_Zqb1wzlFDXwnblFHCU6Q_aem_kejCHhrQUPOPprG7Lk2syw" target="_blank">website</a> / <a href="https://www.instagram.com/tipp.exe/" target="_blank">instagram</a> </li>
@@ -631,6 +715,28 @@
             </div>
         </div>
 
+        <div class="window" id="win-shows" style="top: 120px; left: 280px; width: max-content; max-width: none;">
+            <div class="title-bar">
+                <div class="title-bar-text">shows.exe</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Close" onclick="closeWindow('win-shows')"></button>
+                </div>
+            </div>
+            <div class="window-body" style="white-space: nowrap;">
+                <p><b>upcoming</b></p>
+                <p>tba</p>
+
+                <p><b>previous</b></p>
+                <p>
+                    2026 October 30 — radio DJ set — Panini Radio, Copenhagen (DK)<br>
+                    2026 October 23 — Live performance — Memories &amp; Reservoirs, Sound Art Lab, Struer (DK)<br>
+                    2026 October 2 — radio live set — Blue Rider Radio, Amsterdam (NL)<br>
+                    2026 October 1 — radio live set — Future Intel, The Hague (NL)<br>
+                    2026 April 14 — Live performance — Daddy Shareholders, The Cube, Bang &amp; Olufsen, Struer (DK)
+                </p>
+            </div>
+        </div>
+
         <div class="window" id="win-contact" style="top: 140px; left: 300px; width: 360px;">
             <div class="title-bar">
                 <div class="title-bar-text">contact.exe</div>
@@ -639,11 +745,14 @@
                 </div>
             </div>
             <div class="window-body">
-                <div class="field-row-stacked" style="width: 100%;">
-                    <label for="contact-email">email / booking</label>
-                    <input id="contact-email" type="text" readonly value="jasonandrewclark1@gmail.com; rheece@tippexe.com">
-                </div>
+                <p><b>link.exe contact</b></p>
+                <p>linkdotexe@protonmail.com</p>
 
+                <p><b>individual emails</b></p>
+                <p>
+                    jasonandrewclark1@gmail.com<br>
+                    rheece@tippexe.com
+                </p>
             </div>
         </div>
 
@@ -772,10 +881,10 @@
                     link.exe
                 </div>
                 <ul>
-                    <li onclick="openWindow('win-description'); toggleStartMenu()"><span class="menu-glyph">📄</span>description.exe</li>
                     <li onclick="openWindow('win-who'); toggleStartMenu()"><span class="menu-glyph">👤</span>who.exe</li>
                     <li onclick="openWindow('win-press'); toggleStartMenu()"><span class="menu-glyph">🖼️</span>press_photos.exe</li>
                     <li onclick="openWindow('win-contact'); toggleStartMenu()"><span class="menu-glyph">✉️</span>contact.exe</li>
+                    <li onclick="openWindow('win-shows'); toggleStartMenu()"><span class="menu-glyph">🎤</span>shows.exe</li>
                     <li onclick="openWindow('win-perf-radio'); toggleStartMenu()"><span class="menu-glyph">📁</span>Performances &amp; Radio</li>
                     <li onclick="openLogin(); toggleStartMenu()"><span class="menu-glyph">⌨️</span>terminal.exe</li>
                 </ul>
@@ -843,14 +952,23 @@
                 const startY = e.clientY;
                 const startLeft = win.offsetLeft;
                 const startTop = win.offsetTop;
+                let dx = 0;
+                let dy = 0;
                 document.body.classList.add('dragging');
+                win.style.willChange = 'transform';
 
+                // move with a transform while dragging (no layout), commit to left/top on release
                 function onMouseMove(e) {
-                    win.style.left = (startLeft + e.clientX - startX) + 'px';
-                    win.style.top = (startTop + e.clientY - startY) + 'px';
+                    dx = e.clientX - startX;
+                    dy = e.clientY - startY;
+                    win.style.transform = 'translate(' + dx + 'px, ' + dy + 'px)';
                 }
 
                 function onMouseUp() {
+                    win.style.left = (startLeft + dx) + 'px';
+                    win.style.top = (startTop + dy) + 'px';
+                    win.style.transform = '';
+                    win.style.willChange = '';
                     document.body.classList.remove('dragging');
                     document.removeEventListener('mousemove', onMouseMove);
                     document.removeEventListener('mouseup', onMouseUp);
@@ -921,6 +1039,14 @@
 
         document.querySelectorAll('.window').forEach(initWindowBehavior);
 
+        // touch screens have no double-click: a single tap opens icons and folder items
+        const mobileQuery = window.matchMedia('(max-width: 768px)');
+        document.addEventListener('click', function (e) {
+            if (!mobileQuery.matches) return;
+            const target = e.target.closest('.icon, .folder-icon');
+            if (target) target.dispatchEvent(new MouseEvent('dblclick', { bubbles: true }));
+        }, true); // capture phase: the desktop icons' own click handler stops propagation
+
         // desktop icon selection
         document.querySelectorAll('.icon').forEach(function (icon) {
             icon.addEventListener('click', function (e) {
@@ -936,8 +1062,11 @@
 
         // press photos folder
         const pressPhotos = [
-            { file: 'Assets/IMG_3991.JPG', label: 'IMG_3991.JPG' },
-            { file: 'Assets/IMG_3994.JPG', label: 'IMG_3994.JPG' },
+            { file: 'Assets/Jason-Rheece-859.jpg', label: 'Jason-Rheece-859.jpg' },
+            { file: 'Assets/Jason-Rheece-894.jpg', label: 'Jason-Rheece-894.jpg' },
+            { file: 'Assets/Jason-Rheece-941.jpg', label: 'Jason-Rheece-941.jpg' },
+            { file: 'Assets/Jason-Rheece-996.jpg', label: 'Jason-Rheece-996.jpg' },
+            { file: 'Assets/Jason-Rheece-1057.jpg', label: 'Jason-Rheece-1057.jpg' },
             { file: 'Assets/IMG_4015.JPG', label: 'IMG_4015.JPG' }
         ];
 
@@ -945,7 +1074,7 @@
         pressPhotos.forEach(function (photo, index) {
             const icon = document.createElement('div');
             icon.className = 'folder-icon';
-            icon.innerHTML = '<img src="' + photo.file + '" alt="">' +
+            icon.innerHTML = '<img src="' + photo.file.replace('Assets/', 'Assets/thumbs/') + '" alt="" loading="lazy">' +
                 '<div class="folder-icon-label">' + photo.label + '</div>';
             icon.addEventListener('dblclick', function () {
                 openPhotoWindow(index);
@@ -972,17 +1101,26 @@
                         '</div>' +
                     '</div>' +
                     '<div class="window-body photo-window-body">' +
-                        '<img src="' + photo.file + '" alt="">' +
+                        '<img src="' + photo.file.replace('Assets/', 'Assets/web/') + '" alt="">' +
                     '</div>';
                 document.getElementById('desktop').appendChild(win);
                 initWindowBehavior(win);
 
-                // size the image (and the window, since it has no fixed width) to
-                // a quarter of the photo's natural resolution
+                // size the image (and the window, since it has no fixed width) so it
+                // fits comfortably on screen
                 const img = win.querySelector('img');
                 function sizeToPhoto() {
-                    img.style.width = Math.round(img.naturalWidth * 0.25) + 'px';
+                    const maxW = window.innerWidth * 0.6;
+                    const maxH = window.innerHeight * 0.7;
+                    const scale = Math.min(1, maxW / img.naturalWidth, maxH / img.naturalHeight);
+                    img.style.width = Math.round(img.naturalWidth * scale) + 'px';
                     img.style.height = 'auto';
+                    // the stylesheet's max-width: 100% depends on the window's own width,
+                    // which depends on the image: drop it so the window re-fits to the new size
+                    img.style.maxWidth = 'none';
+                    win.offsetWidth; // force a reflow
+                    // the image may land after the window is already showing
+                    if (win.style.display === 'block') centerPhotoWindow(win, index);
                 }
                 if (img.complete) {
                     sizeToPhoto();
@@ -992,7 +1130,21 @@
             }
 
             win.style.display = 'block';
+            if (!win.dataset.placed) centerPhotoWindow(win, index);
             bringToFront(win);
+        }
+
+        // put a photo window in the middle of the visible desktop (with a small
+        // cascade so several open windows don't sit exactly on top of each other)
+        function centerPhotoWindow(win, index) {
+            if (!win.offsetWidth) return;
+            const usableHeight = window.innerHeight - document.getElementById('taskbar').offsetHeight;
+            const cascade = (index % 5) * 20;
+            const left = (window.innerWidth - win.offsetWidth) / 2 + cascade;
+            const top = (usableHeight - win.offsetHeight) / 2 + cascade;
+            win.style.left = Math.max(0, Math.min(left, window.innerWidth - win.offsetWidth)) + 'px';
+            win.style.top = Math.max(0, Math.min(top, usableHeight - win.offsetHeight)) + 'px';
+            win.dataset.placed = '1';
         }
 
         // terminal.exe login
