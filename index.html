@@ -139,6 +139,49 @@
             border: 0;
         }
 
+        /* explorer toolbar: round green XP back/forward buttons + address bar */
+        .explorer-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .explorer-bar input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .window .nav-btn {
+            width: 26px;
+            height: 26px;
+            min-width: 0;
+            padding: 0 0 0 1px;
+            border-radius: 50%;
+            border: 1px solid #1f6b1f;
+            background: radial-gradient(circle at 35% 28%, #b6f0ab 0, #4fbb48 45%, #1f8a1f 100%);
+            color: #fff;
+            font-size: 11px;
+            line-height: 1;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+            cursor: pointer;
+        }
+
+        .window .nav-btn:hover:not(:disabled) {
+            filter: brightness(1.1);
+        }
+
+        .window .nav-btn:active:not(:disabled) {
+            filter: brightness(0.85);
+        }
+
+        .window .nav-btn:disabled {
+            background: radial-gradient(circle at 35% 28%, #f0f0f0 0, #c4c4c4 60%, #a8a8a8 100%);
+            border-color: #8a8a8a;
+            color: #eee;
+            cursor: default;
+        }
+
         /* folder windows get a white Explorer-style pane */
         .folder-icons {
             display: flex;
@@ -758,7 +801,7 @@
 
         <div class="window" id="win-videos" style="top: 80px; left: 380px; width: 780px;">
             <div class="title-bar">
-                <div class="title-bar-text">daddy_shareholders_performance.exe</div>
+                <div class="title-bar-text">daddy_shareholders_performance.mov</div>
                 <div class="title-bar-controls">
                     <button aria-label="Close" onclick="closeWindow('win-videos')"></button>
                 </div>
@@ -774,7 +817,7 @@
 
         <div class="window" id="win-bluerider" style="top: 60px; left: 300px; width: 780px;">
             <div class="title-bar">
-                <div class="title-bar-text">Blue Rider Radio - 2/10/26.exe</div>
+                <div class="title-bar-text">Blue Rider Radio - 2/10/26.mp4</div>
                 <div class="title-bar-controls">
                     <button aria-label="Close" onclick="closeWindow('win-bluerider')"></button>
                 </div>
@@ -788,7 +831,7 @@
 
         <div class="window" id="win-futureintel" style="top: 100px; left: 340px; width: 780px;">
             <div class="title-bar">
-                <div class="title-bar-text">Future Intel 1/10/26.exe</div>
+                <div class="title-bar-text">Future Intel 1/10/26.mkv</div>
                 <div class="title-bar-controls">
                     <button aria-label="Close" onclick="closeWindow('win-futureintel')"></button>
                 </div>
@@ -800,8 +843,8 @@
             </div>
         </div>
 
-        <!-- Performances & Radio folder and its subfolders -->
-        <div class="window" id="win-perf-radio" style="top: 100px; left: 220px; width: 300px;">
+        <!-- Performances & Radio: one explorer window, folders open in place -->
+        <div class="window" id="win-perf-radio" style="top: 100px; left: 220px; width: 380px;">
             <div class="title-bar">
                 <div class="title-bar-text">Performances &amp; Radio</div>
                 <div class="title-bar-controls">
@@ -809,53 +852,26 @@
                 </div>
             </div>
             <div class="window-body">
-                <div class="folder-icons">
-                    <div class="folder-icon" ondblclick="openWindow('win-radio')">
-                        <div class="folder-glyph">📁</div>
-                        <div class="folder-icon-label">Radio</div>
-                    </div>
-                    <div class="folder-icon" ondblclick="openWindow('win-performances')">
-                        <div class="folder-glyph">📁</div>
-                        <div class="folder-icon-label">Performances</div>
-                    </div>
+                <div class="explorer-bar">
+                    <button class="nav-btn" id="explorer-back" aria-label="Back" title="Back" disabled>&#9664;</button>
+                    <button class="nav-btn" id="explorer-forward" aria-label="Forward" title="Forward" disabled>&#9654;</button>
+                    <label for="explorer-address">Address</label>
+                    <input id="explorer-address" type="text" readonly>
                 </div>
+                <div class="folder-icons explorer-icons" id="explorer-icons"></div>
             </div>
         </div>
 
-        <div class="window" id="win-radio" style="top: 140px; left: 260px; width: 300px;">
+        <div class="window" id="win-djset1" style="top: 100px; left: 360px; width: 780px;">
             <div class="title-bar">
-                <div class="title-bar-text">Radio</div>
+                <div class="title-bar-text">Radio Panini - 30/10/26.avi</div>
                 <div class="title-bar-controls">
-                    <button aria-label="Close" onclick="closeWindow('win-radio')"></button>
+                    <button aria-label="Close" onclick="closeWindow('win-djset1')"></button>
                 </div>
             </div>
             <div class="window-body">
-                <div class="folder-icons">
-                    <div class="folder-icon" ondblclick="openWindow('win-bluerider')">
-                        <div class="folder-glyph">🎬</div>
-                        <div class="folder-icon-label">Blue Rider Radio - 2/10/26.exe</div>
-                    </div>
-                    <div class="folder-icon" ondblclick="openWindow('win-futureintel')">
-                        <div class="folder-glyph">🎬</div>
-                        <div class="folder-icon-label">Future Intel 1/10/26.exe</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="window" id="win-performances" style="top: 180px; left: 300px; width: 300px;">
-            <div class="title-bar">
-                <div class="title-bar-text">Performances</div>
-                <div class="title-bar-controls">
-                    <button aria-label="Close" onclick="closeWindow('win-performances')"></button>
-                </div>
-            </div>
-            <div class="window-body">
-                <div class="folder-icons">
-                    <div class="folder-icon" ondblclick="openWindow('win-videos')">
-                        <div class="folder-glyph">🎬</div>
-                        <div class="folder-icon-label">daddy_shareholders_performance.exe</div>
-                    </div>
+                <div class="video-embed">
+                    <iframe src="https://www.youtube-nocookie.com/embed/jTCJe7BdZwU" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen title="Radio Panini - 30/10/26"></iframe>
                 </div>
             </div>
         </div>
@@ -1059,6 +1075,80 @@
         document.getElementById('desktop').addEventListener('click', function () {
             document.querySelectorAll('.icon').forEach(i => i.classList.remove('selected'));
         });
+
+        // Performances & Radio: folders open in the same window, with back / forward history
+        const explorerTree = {
+            root: { name: 'Performances & Radio', items: [
+                { folder: 'radio', name: 'Radio' },
+                { folder: 'performances', name: 'Performances' },
+                { folder: 'djsets', name: 'dj sets' }
+            ] },
+            radio: { name: 'Radio', items: [
+                { win: 'win-bluerider', name: 'Blue Rider Radio - 2/10/26.mp4' },
+                { win: 'win-futureintel', name: 'Future Intel 1/10/26.mkv' }
+            ] },
+            performances: { name: 'Performances', items: [
+                { win: 'win-videos', name: 'daddy_shareholders_performance.mov' }
+            ] },
+            djsets: { name: 'dj sets', items: [
+                { win: 'win-djset1', name: 'Radio Panini - 30/10/26.avi' }
+            ] }
+        };
+        const explorerHistory = ['root'];
+        let explorerPosition = 0;
+
+        const explorerIcons = document.getElementById('explorer-icons');
+        const explorerBack = document.getElementById('explorer-back');
+        const explorerForward = document.getElementById('explorer-forward');
+        const explorerAddress = document.getElementById('explorer-address');
+
+        function renderExplorer() {
+            const folderId = explorerHistory[explorerPosition];
+            const folder = explorerTree[folderId];
+
+            explorerAddress.value = folderId === 'root'
+                ? folder.name
+                : explorerTree.root.name + '\\' + folder.name;
+            explorerBack.disabled = explorerPosition === 0;
+            explorerForward.disabled = explorerPosition === explorerHistory.length - 1;
+
+            explorerIcons.innerHTML = '';
+            folder.items.forEach(function (item) {
+                const icon = document.createElement('div');
+                icon.className = 'folder-icon';
+                icon.innerHTML = '<div class="folder-glyph">' + (item.folder ? '📁' : '🎬') + '</div>' +
+                    '<div class="folder-icon-label"></div>';
+                icon.querySelector('.folder-icon-label').textContent = item.name;
+                icon.addEventListener('dblclick', function () {
+                    if (item.folder) {
+                        // opening a folder drops any "forward" entries, like a real browser
+                        explorerHistory.splice(explorerPosition + 1);
+                        explorerHistory.push(item.folder);
+                        explorerPosition += 1;
+                        renderExplorer();
+                    } else {
+                        openWindow(item.win);
+                    }
+                });
+                explorerIcons.appendChild(icon);
+            });
+        }
+
+        explorerBack.addEventListener('click', function () {
+            if (explorerPosition > 0) {
+                explorerPosition -= 1;
+                renderExplorer();
+            }
+        });
+
+        explorerForward.addEventListener('click', function () {
+            if (explorerPosition < explorerHistory.length - 1) {
+                explorerPosition += 1;
+                renderExplorer();
+            }
+        });
+
+        renderExplorer();
 
         // press photos folder
         const pressPhotos = [
