@@ -145,6 +145,19 @@
             align-items: center;
             gap: 6px;
             margin-bottom: 6px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #aca899;
+        }
+
+        .explorer-bar .bar-sep {
+            width: 1px;
+            height: 22px;
+            background: #aca899;
+            margin: 0 2px;
+        }
+
+        .explorer-bar input {
+            height: 23px;
         }
 
         .explorer-bar input {
@@ -211,6 +224,99 @@
 
         .folder-icon .folder-glyph {
             font-size: 43px;
+            line-height: 1;
+        }
+
+        /* details (list) view: aligned Name / Type columns with a header row */
+        .folder-icons.list-view {
+            display: block;
+            padding: 0;
+        }
+
+        .folder-icons.list-view .folder-icon {
+            width: auto;
+            display: grid;
+            grid-template-columns: 24px 1fr 130px;
+            align-items: center;
+            gap: 0 6px;
+            padding: 2px 6px;
+        }
+
+        .folder-icons.list-view .folder-glyph {
+            font-size: 17px;
+            text-align: center;
+        }
+
+        .folder-icons.list-view .folder-icon-label {
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .folder-type,
+        .details-header {
+            display: none;
+        }
+
+        .folder-icons.list-view .folder-type {
+            display: block;
+            font-size: 12px;
+            color: #444;
+        }
+
+        .folder-icons.list-view .details-header {
+            display: grid;
+            grid-template-columns: 1fr 130px;
+            font-size: 12px;
+            background: linear-gradient(#fdfdfb, #ece9d8);
+            border-bottom: 1px solid #aca899;
+            margin-bottom: 2px;
+        }
+
+        .details-header span {
+            padding: 3px 6px;
+            border-right: 1px solid #d6d2c2;
+        }
+
+        .details-header span:first-child {
+            padding-left: 36px;
+        }
+
+        .folder-icon.selected .folder-icon-label,
+        .folder-icons.list-view .folder-icon.selected {
+            background: #316ac5;
+            color: #fff;
+        }
+
+        .folder-icons.list-view .folder-icon.selected .folder-icon-label,
+        .folder-icons.list-view .folder-icon.selected .folder-type {
+            background: none;
+            color: #fff;
+        }
+
+        .folder-icon.selected .folder-glyph {
+            opacity: 0.8;
+        }
+
+        .folder-icon.selected .folder-icon-label {
+            padding: 0 3px;
+        }
+
+        .window .view-btn {
+            min-width: 0;
+            width: auto;
+            height: 26px;
+            padding: 0 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .window .view-btn .view-icon {
+            font-size: 14px;
             line-height: 1;
         }
 
@@ -809,14 +915,14 @@
 
         <div class="window" id="win-videos" style="top: 80px; left: 380px; width: 780px;">
             <div class="title-bar">
-                <div class="title-bar-text">daddy_shareholders_performance.mov</div>
+                <div class="title-bar-text">daddy_shareholders - 14/04/26.mov</div>
                 <div class="title-bar-controls">
                     <button aria-label="Close" onclick="closeWindow('win-videos')"></button>
                 </div>
             </div>
             <div class="window-body">
                 <div class="video-embed">
-                    <iframe src="https://player.vimeo.com/video/1208024619?h=7f1bc9aadf&byline=0&portrait=0&badge=0&autopause=0&player_id=0&app_id=58479" allow="autoplay; fullscreen; picture-in-picture" title="Living Room - Jason Clark &amp; Atser Damsma"></iframe>
+                    <iframe src="https://www.youtube-nocookie.com/embed/ehy1UOr0FdY" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen title="Living Room - Jason Clark &amp; Atser Damsma"></iframe>
                 </div>
                 <p style="margin-bottom: 0;">stuck on the corporate ladder (we took the elevator)</p>
                 <p>Performance, The Cube, Soundhub, Struer (DE)</p>
@@ -865,8 +971,24 @@
                     <button class="nav-btn" id="explorer-forward" aria-label="Forward" title="Forward" disabled>&#9654;</button>
                     <label for="explorer-address">Address</label>
                     <input id="explorer-address" type="text" readonly>
+                    <span class="bar-sep"></span>
+                    <button class="view-btn" id="explorer-view" title="Switch to details view"><span class="view-icon">&#9776;</span><span id="explorer-view-label">Details</span></button>
                 </div>
                 <div class="folder-icons explorer-icons" id="explorer-icons"></div>
+            </div>
+        </div>
+
+        <div class="window" id="win-memories" style="top: 90px; left: 350px; width: 780px;">
+            <div class="title-bar">
+                <div class="title-bar-text">Memories &amp; Reservoirs - 23/11/26.mp4</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Close" onclick="closeWindow('win-memories')"></button>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="video-embed">
+                    <iframe src="https://www.youtube-nocookie.com/embed/56Pcs0cKzqk" allow="autoplay; encrypted-media; fullscreen; picture-in-picture" allowfullscreen title="Memories &amp; Reservoirs - 23/11/26"></iframe>
+                </div>
             </div>
         </div>
 
@@ -1096,7 +1218,8 @@
                 { win: 'win-futureintel', name: 'Future Intel 1/10/26.mkv' }
             ] },
             performances: { name: 'Performances', items: [
-                { win: 'win-videos', name: 'daddy_shareholders_performance.mov' }
+                { win: 'win-videos', name: 'daddy_shareholders - 14/04/26.mov' },
+                { win: 'win-memories', name: 'Memories & Reservoirs - 23/11/26.mp4' }
             ] },
             djsets: { name: 'dj sets', items: [
                 { win: 'win-djset1', name: 'Radio Panini - 30/10/26.avi' }
@@ -1109,6 +1232,14 @@
         const explorerBack = document.getElementById('explorer-back');
         const explorerForward = document.getElementById('explorer-forward');
         const explorerAddress = document.getElementById('explorer-address');
+        const explorerView = document.getElementById('explorer-view');
+
+        explorerView.addEventListener('click', function () {
+            const isList = explorerIcons.classList.toggle('list-view');
+            explorerView.querySelector('.view-icon').innerHTML = isList ? '&#9638;' : '&#9776;';
+            document.getElementById('explorer-view-label').textContent = isList ? 'Icons' : 'Details';
+            explorerView.title = isList ? 'Switch to icon view' : 'Switch to details view';
+        });
 
         function renderExplorer() {
             const folderId = explorerHistory[explorerPosition];
@@ -1120,13 +1251,19 @@
             explorerBack.disabled = explorerPosition === 0;
             explorerForward.disabled = explorerPosition === explorerHistory.length - 1;
 
-            explorerIcons.innerHTML = '';
+            explorerIcons.innerHTML = '<div class="details-header"><span>Name</span><span>Type</span></div>';
             folder.items.forEach(function (item) {
                 const icon = document.createElement('div');
                 icon.className = 'folder-icon';
                 icon.innerHTML = '<div class="folder-glyph">' + (item.folder ? '📁' : '🎬') + '</div>' +
-                    '<div class="folder-icon-label"></div>';
+                    '<div class="folder-icon-label"></div>' +
+                    '<div class="folder-type">' + (item.folder ? 'File folder' : 'Video file') + '</div>';
                 icon.querySelector('.folder-icon-label').textContent = item.name;
+                icon.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    explorerIcons.querySelectorAll('.selected').forEach(function (el) { el.classList.remove('selected'); });
+                    icon.classList.add('selected');
+                });
                 icon.addEventListener('dblclick', function () {
                     if (item.folder) {
                         // opening a folder drops any "forward" entries, like a real browser
@@ -1141,6 +1278,10 @@
                 explorerIcons.appendChild(icon);
             });
         }
+
+        explorerIcons.addEventListener('click', function () {
+            explorerIcons.querySelectorAll('.selected').forEach(function (el) { el.classList.remove('selected'); });
+        });
 
         explorerBack.addEventListener('click', function () {
             if (explorerPosition > 0) {
