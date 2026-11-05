@@ -303,21 +303,33 @@
             padding: 0 3px;
         }
 
-        .window .view-btn {
-            min-width: 0;
-            width: auto;
-            height: 26px;
-            padding: 0 8px;
+        .view-toggle {
             display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 12px;
-            white-space: nowrap;
         }
 
-        .window .view-btn .view-icon {
-            font-size: 14px;
+        .window .view-btn {
+            min-width: 0;
+            width: 28px;
+            height: 26px;
+            padding: 0;
+            font-size: 15px;
             line-height: 1;
+            border-radius: 0;
+        }
+
+        .window .view-btn:first-child {
+            border-radius: 3px 0 0 3px;
+        }
+
+        .window .view-btn:last-child {
+            border-radius: 0 3px 3px 0;
+            margin-left: -1px;
+        }
+
+        .window .view-btn.active {
+            background: linear-gradient(#cfd9ee, #e3e9f5);
+            box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.35);
+            border-color: #316ac5;
         }
 
         .folder-icon-label {
@@ -972,7 +984,10 @@
                     <label for="explorer-address">Address</label>
                     <input id="explorer-address" type="text" readonly>
                     <span class="bar-sep"></span>
-                    <button class="view-btn" id="explorer-view" title="Switch to details view"><span class="view-icon">&#9776;</span><span id="explorer-view-label">Details</span></button>
+                    <span class="view-toggle">
+                        <button class="view-btn active" id="explorer-view-grid" aria-label="Icon view" title="Icon view">&#9638;</button>
+                        <button class="view-btn" id="explorer-view-list" aria-label="Details view" title="Details view">&#9776;</button>
+                    </span>
                 </div>
                 <div class="folder-icons explorer-icons" id="explorer-icons"></div>
             </div>
@@ -1232,14 +1247,17 @@
         const explorerBack = document.getElementById('explorer-back');
         const explorerForward = document.getElementById('explorer-forward');
         const explorerAddress = document.getElementById('explorer-address');
-        const explorerView = document.getElementById('explorer-view');
+        const viewGrid = document.getElementById('explorer-view-grid');
+        const viewList = document.getElementById('explorer-view-list');
 
-        explorerView.addEventListener('click', function () {
-            const isList = explorerIcons.classList.toggle('list-view');
-            explorerView.querySelector('.view-icon').innerHTML = isList ? '&#9638;' : '&#9776;';
-            document.getElementById('explorer-view-label').textContent = isList ? 'Icons' : 'Details';
-            explorerView.title = isList ? 'Switch to icon view' : 'Switch to details view';
-        });
+        function setExplorerView(list) {
+            explorerIcons.classList.toggle('list-view', list);
+            viewList.classList.toggle('active', list);
+            viewGrid.classList.toggle('active', !list);
+        }
+
+        viewGrid.addEventListener('click', function () { setExplorerView(false); });
+        viewList.addEventListener('click', function () { setExplorerView(true); });
 
         function renderExplorer() {
             const folderId = explorerHistory[explorerPosition];
