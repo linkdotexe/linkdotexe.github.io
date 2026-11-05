@@ -332,6 +332,23 @@
             border-color: #316ac5;
         }
 
+        .photo-credit {
+            margin-top: 4px;
+            font-size: 11px;
+            width: 0;
+            min-width: 100%;
+            white-space: nowrap;
+        }
+
+        .photo-credit a {
+            color: #0000ee;
+            text-decoration: underline;
+        }
+
+        .photo-credit a:hover {
+            color: #ff0000;
+        }
+
         .folder-icon-label {
             font-size: 13px;
             text-align: center;
@@ -1318,12 +1335,15 @@
         renderExplorer();
 
         // press photos folder
+        const photographerName = 'Andrew Kambel';
+        const photographerUrl = 'https://www.andrewkambel.com/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAcGRvZgJzcnRjBmFwcF9pZA85MzY2MTk3NDMzOTI0NTkAAafPL40gdqKbku6p0Z7wa-_ZShoxOSD2FcCnPNkwMcliZyia2BB74boy3obuxg_aem_Hp6MuPslBKX85WE9NJmDcg';
+
         const pressPhotos = [
-            { file: 'Assets/Jason-Rheece-859.jpg', label: 'Jason-Rheece-859.jpg' },
-            { file: 'Assets/Jason-Rheece-894.jpg', label: 'Jason-Rheece-894.jpg' },
-            { file: 'Assets/Jason-Rheece-941.jpg', label: 'Jason-Rheece-941.jpg' },
-            { file: 'Assets/Jason-Rheece-996.jpg', label: 'Jason-Rheece-996.jpg' },
-            { file: 'Assets/Jason-Rheece-1057.jpg', label: 'Jason-Rheece-1057.jpg' },
+            { file: 'Assets/Jason-Rheece-859.jpg', label: 'Jason-Rheece-859.jpg', credit: true },
+            { file: 'Assets/Jason-Rheece-894.jpg', label: 'Jason-Rheece-894.jpg', credit: true },
+            { file: 'Assets/Jason-Rheece-941.jpg', label: 'Jason-Rheece-941.jpg', credit: true },
+            { file: 'Assets/Jason-Rheece-996.jpg', label: 'Jason-Rheece-996.jpg', credit: true },
+            { file: 'Assets/Jason-Rheece-1057.jpg', label: 'Jason-Rheece-1057.jpg', credit: true },
             { file: 'Assets/IMG_4015.JPG', label: 'IMG_4015.JPG' }
         ];
 
@@ -1359,6 +1379,9 @@
                     '</div>' +
                     '<div class="window-body photo-window-body">' +
                         '<img src="' + photo.file.replace('Assets/', 'Assets/web/') + '" alt="">' +
+                        (photo.credit
+                            ? '<div class="photo-credit">photo: <a href="' + photographerUrl + '" target="_blank" rel="noopener">' + photographerName + '</a></div>'
+                            : '') +
                     '</div>';
                 document.getElementById('desktop').appendChild(win);
                 initWindowBehavior(win);
